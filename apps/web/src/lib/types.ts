@@ -1,0 +1,10 @@
+export type Row = Record<string, string | number | boolean | null>;
+export type ChartSpec = { kind: "table" | "bar" | "line" | "pie" | "scatter" | "kpi"; title: string; x: string; y: string; result_index: number };
+export type Result = { columns: string[]; rows: Row[]; source_id: string; sql?: string; original_sql?: string; mongo?: unknown; truncated?: boolean; latency_ms?: number };
+export type Evidence = { chunk_id: string; text: string; filename: string; page: number | null; heading: string; source_id: string; version?: number; section?: string };
+export type Artifact = { results?: Result[]; evidence?: Evidence[]; web?: { title: string; url: string; text: string }[]; trace?: Record<string, unknown>[]; charts?: ChartSpec[]; usage?: Record<string, unknown>; refreshed_at?: string; observability?: {total_ms: number; used_source_ids: string[]; public_web_used: boolean}; selected_sources?: {id: string; name: string; kind: string}[] };
+export type Message = { id: string; role: string; text: string; artifact: Artifact; restricted?: boolean; source_ids?: string[] };
+export type Source = { id: string; name: string; kind: string; status: string; resources: string[]; catalog: { schema?: Record<string, { columns: { name: string; type: string }[] }>; description?: string; metrics?: Record<string, string>; [key: string]: unknown } };
+export type Me = { id: string; name: string; email: string; csrf: string; role: string; workspace_id: string; platform_admin: boolean; preferences: { appearance?: string; concise?: boolean; custom_instructions?: string; about_me?: string; personalization_enabled?: boolean }; workspaces: { id: string; name: string; mode: string; capacity: number; role: string }[] };
+export type Widget = { message_id: string; result_index: number; chart: ChartSpec; result?: Result; restricted?: boolean };
+export type Dashboard = { id: string; name: string; widgets: Widget[] };

@@ -1,0 +1,116 @@
+name: datamind
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: datamind
+      POSTGRES_DB: datamind
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run setup.py}
+    ports: ["127.0.0.1:15432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U datamind -d datamind"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Run setup.py}
+      MYSQL_DATABASE: aster
+    ports: ["127.0.0.1:13306:3306"]
+    volumes: ["mysql_data:/var/lib/mysql"]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    restart: unless-stopped
+  mongo:
+    image: mongo:8.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: operator
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Run setup.py}
+    ports: ["127.0.0.1:17017:27017"]
+    volumes: ["mongo_data:/data/db"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping:1}).ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  qdrant:
+    image: qdrant/qdrant:v1.19.1
+    environment:
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY:?Run setup.py}
+    ports: ["127.0.0.1:16333:6333"]
+    volumes: ["qdrant_data:/qdrant/storage"]
+    restart: unless-stopped
+  search:
+    image: searxng/searxng@sha256:d81e14a4328ba7a57f297dff0472be629d30bf29580406c0d5b3bdab563c9bed
+    environment:
+      SEARXNG_SECRET: ${SECRET_KEY:?Run setup.py}
+    ports: ["127.0.0.1:18080:8080"]
+    volumes: ["./infrastructure/searxng/settings.yml:/etc/searxng/settings.yml:ro"]
+    restart: unless-stopped
+  migrate:
+    image: datamind-runtime:local
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://datamind:${POSTGRES_PASSWORD}@postgres:5432/datamind
+    command: ["python", "-m", "alembic", "upgrade", "head"]
+    depends_on:
+      postgres: { condition: service_healthy }
+    profiles: ["app"]
+  api:
+    image: datamind-runtime:local
+    build:
+      context: .
+      dockerfile: infrastructure/docker/api.Dockerfile
+    env_file: .env
+    environment: &app_env
+      DATABASE_URL: postgresql+psycopg://datamind:${POSTGRES_PASSWORD}@postgres:5432/datamind
+      QDRANT_URL: http://qdrant:6333
+      SEARXNG_URL: http://search:8080
+      STORAGE_ROOT: /app/data/files
+      SQLITE_ROOT: /app/data/sources
+      MODEL_CACHE: /app/data/models
+    command: ["uvicorn", "datamind.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["127.0.0.1:18000:8000"]
+    volumes: ["./data:/app/data"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      qdrant: { condition: service_started }
+    profiles: ["app"]
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+  worker:
+    image: datamind-runtime:local
+    env_file: .env
+    environment: *app_env
+    command: ["python", "-m", "datamind.worker"]
+    volumes: ["./data:/app/data"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      qdrant: { condition: service_started }
+    profiles: ["app"]
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+  web:
+    build:
+      context: apps/web
+      dockerfile: ../../infrastructure/docker/web.Dockerfile
+    environment:
+      API_URL: http://api:8000
+      HOSTNAME: 0.0.0.0
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: ["api"]
+    profiles: ["app"]
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+volumes:
+  postgres_data:
+  mysql_data:
+  mongo_data:
+  qdrant_data:

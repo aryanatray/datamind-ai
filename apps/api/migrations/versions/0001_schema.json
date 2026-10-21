@@ -1,0 +1,874 @@
+[
+  {
+    "name": "audit",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "action",
+        "type": "string",
+        "length": 80,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "created",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "user_id",
+      "workspace_id"
+    ]
+  },
+  {
+    "name": "budgets",
+    "columns": [
+      {
+        "name": "key",
+        "type": "string",
+        "length": 150,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "used",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "system_settings",
+    "columns": [
+      {
+        "name": "key",
+        "type": "string",
+        "length": 100,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "value",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "usage",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "model",
+        "type": "string",
+        "length": 100,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "input_tokens",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "output_tokens",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "latency_ms",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "created",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "user_id",
+      "workspace_id"
+    ]
+  },
+  {
+    "name": "users",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "length": 254,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "length": 100,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "password",
+        "type": "text",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "preferences",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [
+      [
+        "email"
+      ]
+    ],
+    "indexes": []
+  },
+  {
+    "name": "workspaces",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "length": 100,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "length": 20,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "capacity",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "policy_version",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "conversations",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "users.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "workspaces.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "length": 160,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "created",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "user_id"
+    ]
+  },
+  {
+    "name": "dashboards",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "users.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "workspaces.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "length": 100,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "widgets",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "user_id"
+    ]
+  },
+  {
+    "name": "invitations",
+    "columns": [
+      {
+        "name": "token_hash",
+        "type": "string",
+        "length": 64,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "workspaces.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "length": 254,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "expires",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "accepted",
+        "type": "boolean",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "memberships",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "users.id",
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "workspaces.id",
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "length": 10,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "sessions",
+    "columns": [
+      {
+        "name": "token_hash",
+        "type": "string",
+        "length": 64,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "users.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "expires",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "csrf",
+        "type": "string",
+        "length": 64,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "sources",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "workspace_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "workspaces.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "length": 255,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "length": 20,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "secret",
+        "type": "text",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "catalog",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "resources",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "length": 30,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "created",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "workspace_id"
+    ]
+  },
+  {
+    "name": "documents",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "sources.id",
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "length": 255,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "extension",
+        "type": "string",
+        "length": 12,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "path",
+        "type": "text",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "sha256",
+        "type": "string",
+        "length": 64,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "collection",
+        "type": "string",
+        "length": 100,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "size",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "extracted",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "profile",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "grants",
+    "columns": [
+      {
+        "name": "source_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "sources.id",
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "users.id",
+        "primary_key": true,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": []
+  },
+  {
+    "name": "jobs",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "source_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "sources.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "length": 30,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "stage",
+        "type": "string",
+        "length": 40,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "attempts",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "error",
+        "type": "text",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "lease_until",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": true
+      },
+      {
+        "name": "created",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "source_id"
+    ]
+  },
+  {
+    "name": "messages",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "conversation_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "conversations.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "length": 20,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "text",
+        "type": "text",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "source_ids",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "artifact",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "created",
+        "type": "datetime",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [],
+    "indexes": [
+      "conversation_id"
+    ]
+  },
+  {
+    "name": "query_cache",
+    "columns": [
+      {
+        "name": "id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": null,
+        "primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "source_id",
+        "type": "string",
+        "length": 36,
+        "foreign_key": "sources.id",
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      },
+      {
+        "name": "schema",
+        "type": "json",
+        "length": null,
+        "foreign_key": null,
+        "primary_key": false,
+        "nullable": false
+      }
+    ],
+    "unique": [
+      [
+        "source_id",
+        "version"
+      ]
+    ],
+    "indexes": []
+  }
+]

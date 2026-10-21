@@ -1,0 +1,9 @@
+.git
+.env
+.venv
+data
+**/node_modules
+**/.next
+**/__pycache__
+datasets/generated
+test-results
